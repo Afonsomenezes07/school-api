@@ -7,6 +7,7 @@ API REST para gerenciamento de alunos, matérias e notas.
 - Python
 - Django
 - Django REST Framework
+- Django Filter
 - PostgreSQL
 - Docker
 - Git/GitHub
@@ -20,9 +21,12 @@ API REST para gerenciamento de alunos, matérias e notas.
 - CRUD completo de notas
 - Endpoints RESTful
 - Paginação
+- Busca de alunos por nome e e-mail
+- Busca de matérias por nome
+- Filtros de notas por aluno
+- Filtros de notas por matéria
 - Integração com PostgreSQL
 - Containerização com Docker
-- Filtros na API
 
 ---
 
@@ -48,7 +52,7 @@ school-api/
 ## Clonar o repositório
 
 ```bash
-git clone https://github.com/SEU_USUARIO/school-api.git
+git clone https://github.com/Afonsomenezes07/school-api.git
 ```
 
 ```bash
@@ -81,6 +85,22 @@ docker compose up --build
 
 ---
 
+## Parar containers
+
+```bash
+docker compose down
+```
+
+---
+
+## Visualizar logs
+
+```bash
+docker compose logs -f
+```
+
+---
+
 # Executar migrations
 
 ```bash
@@ -105,12 +125,20 @@ http://localhost:8000/api/
 
 ---
 
+# Acessar Admin
+
+```text
+http://localhost:8000/admin/
+```
+
+---
+
 # Endpoints
 
 ## Students
 
 | Método | Endpoint |
-|---|---|
+|----------|----------|
 | GET | /api/students/ |
 | POST | /api/students/ |
 | PUT | /api/students/{id}/ |
@@ -121,7 +149,7 @@ http://localhost:8000/api/
 ## Subjects
 
 | Método | Endpoint |
-|---|---|
+|----------|----------|
 | GET | /api/subjects/ |
 | POST | /api/subjects/ |
 | PUT | /api/subjects/{id}/ |
@@ -132,7 +160,7 @@ http://localhost:8000/api/
 ## Grades
 
 | Método | Endpoint |
-|---|---|
+|----------|----------|
 | GET | /api/grades/ |
 | POST | /api/grades/ |
 | PUT | /api/grades/{id}/ |
@@ -154,7 +182,7 @@ POST /api/students/
 
 ```json
 {
-  "name": "João",
+  "name": "João Silva",
   "email": "joao@email.com"
 }
 ```
@@ -163,12 +191,60 @@ POST /api/students/
 
 # Paginação
 
-A API possui paginação habilitada.
+A API possui paginação habilitada com 5 registros por página.
 
-Exemplo:
+Exemplos:
+
+```text
+/api/students/?page=1
+```
 
 ```text
 /api/students/?page=2
+```
+
+---
+
+# Busca
+
+## Buscar alunos por nome
+
+```text
+/api/students/?search=joao
+```
+
+---
+
+## Buscar alunos por e-mail
+
+```text
+/api/students/?search=gmail
+```
+
+---
+
+## Buscar matérias por nome
+
+```text
+/api/subjects/?search=mat
+```
+
+---
+
+# Filtros
+
+## Filtrar notas por aluno
+
+```text
+/api/grades/?student=1
+```
+
+---
+
+## Filtrar notas por matéria
+
+```text
+/api/grades/?subject=2
 ```
 
 ---
@@ -201,6 +277,14 @@ pip install -r requirements.txt
 
 ---
 
+# Executar migrations
+
+```bash
+python manage.py migrate
+```
+
+---
+
 # Executar servidor
 
 ```bash
@@ -213,10 +297,11 @@ python manage.py runserver
 
 - Autenticação JWT
 - Swagger/OpenAPI
-- Deploy em nuvem
 - Permissões de usuário
+- Deploy em nuvem
 
 ---
+
 # Autor
 
 Afonso Menezes
